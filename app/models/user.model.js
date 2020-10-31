@@ -16,7 +16,8 @@ module.exports = (sequelize, Sequelize) => {
       references: {
         model: 'roles',
         key: 'id'
-    }
+    },
+    defaultValue:1
 
     }
   });

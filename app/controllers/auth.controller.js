@@ -31,6 +31,7 @@ exports.signin =async (req, res) => {
     }
   })
     .then(async user => {
+     
       if (!user) {
         return res.status(404).send({ message: "User Not found." });
       }
@@ -53,8 +54,9 @@ exports.signin =async (req, res) => {
         expiresIn: 8600 // 24 hours
       });
 
-   
-      Role.findOne({name:user.roleId}).then(async role=>{
+  
+      Role.findOne({where:{id:user.roleId}}).then(async role=>{
+         
         const userRole=('ROLE_'+role.name).toUpperCase();
       
     const createtoken=await Token.findOne({where:{userId:user.id}});

@@ -26,7 +26,7 @@ verifyToken =(req, res, next) => {
       const to= await Token.findOne({where:{token:token}})
       if(to != null)
       {
-        req.userId=decoded
+        req.userId=decoded.id
         next();
     
       }
@@ -43,8 +43,9 @@ verifyToken =(req, res, next) => {
 
 
 isAdmin = (req, res, next) => {
+  console.log(req.userId)
   User.findByPk(req.userId).then(user => {
-    Role.findByPk(user.roleId).then(roles => {
+   user ? Role.findByPk(user.roleId).then(roles => {
       
         if (roles.name === "admin") {
           next();
@@ -56,8 +57,11 @@ isAdmin = (req, res, next) => {
         message: "Require Admin Role!"
       });
       return;
+    }):res.status(403).send({
+      message: "Require Admin Role!"
     });
-  });
+    return;
+  })
 };
 
   

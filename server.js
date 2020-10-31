@@ -3,6 +3,8 @@ const cors=require('cors')
 const app=express();
 const db=require('./app/models')
 const Role=db.role;
+const Skill=db.skill;
+const Doctor=db.doctor;
 
 //Cors Options
 var corsOptions={
@@ -23,11 +25,14 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 //sequelize databse connection
-db.sequelize.sync({force:true}).then(() => {
+db.sequelize.sync().then(() => {
    console.log("Database Running Successfully")
- 
+
    
   }).catch((err)=>console.log(`Error ${err}`));
+
+ 
+  
   function initial(){
     Role.bulkCreate([{
       id:1,
@@ -40,8 +45,12 @@ db.sequelize.sync({force:true}).then(() => {
 //Route List
 const authRoute=require('./app/routes/auth.routes');
 const userRoute=require('./app/routes/user.routes');
+const skillRoute=require('./app/routes/skill.route')
+const doctorRoute=require('./app/routes/doctor.routes')
 app.use('/api/',userRoute)
 app.use('/api/auth',authRoute)
+app.use('/api/skill',skillRoute)
+app.use('/api/doctor',doctorRoute)
 
 const PORT=process.env.PORT || 8000
   app.get('/',(req,res,next)=>{

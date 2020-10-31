@@ -45,6 +45,29 @@ db.token.belongsTo(db.user,{
   foreignKey:'userId'
 })
 
+db.doctor.belongsToMany(db.patient, {
+  through: "doctor_patient",
+  foreignKey: "doctorId",
+  otherKey: "patientId"
+});
+db.patient.belongsToMany(db.doctor, {
+  through: "doctor_patient",
+  foreignKey: "patientId",
+  otherKey: "doctorId"
+});
+
+db.doctor.belongsToMany(db.skill,{
+  through:'doctor_skill',
+  foreignKey:"doctorId",
+  otherKey:"skillId"
+})
+db.skill.belongsToMany(db.doctor,{
+  through:'doctor_skill',
+  foreignKey:'skillId',
+  otherKey:'doctorId'
+
+});
+
 
 db.ROLES = ["user", "admin"];
 

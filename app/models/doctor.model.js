@@ -12,15 +12,6 @@ module.exports=(sequelize,Sequelize)=>
       degrees:{
           type:Sequelize.STRING,
       },
-      skillId:{
-          type:Sequelize.INTEGER,
-          references:{
-              model:"skills",
-              key:'id'
-          }
-
-
-      },
       experience:{
           type:Sequelize.INTEGER
 
