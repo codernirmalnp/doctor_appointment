@@ -2,8 +2,8 @@ const express=require('express')
 const cors=require('cors')
 const app=express();
 const db=require('./app/models')
+
 const Role=db.role;
-const Skill=db.skill;
 const Doctor=db.doctor;
 
 //Cors Options
@@ -28,29 +28,25 @@ app.use(express.urlencoded({extended:true}))
 db.sequelize.sync().then(() => {
    console.log("Database Running Successfully")
 
-   
   }).catch((err)=>console.log(`Error ${err}`));
 
  
   
   function initial(){
-    Role.bulkCreate([{
-      id:1,
-      name:'user',
-
-
-    },{id:2,name:'admin'}])
+    Role.bulkCreate([{id:1, name:'user'},{id:2,name:'admin'}])
   }
 
 //Route List
 const authRoute=require('./app/routes/auth.routes');
 const userRoute=require('./app/routes/user.routes');
-const skillRoute=require('./app/routes/skill.route')
 const doctorRoute=require('./app/routes/doctor.routes')
+const patientRoute=require('./app/routes/patient.route')
+const dayRoute=require('./app/routes/day.routes')
 app.use('/api/',userRoute)
 app.use('/api/auth',authRoute)
-app.use('/api/skill',skillRoute)
 app.use('/api/doctor',doctorRoute)
+app.use('/api/patient',patientRoute)
+app.use('/api/day',dayRoute)
 
 const PORT=process.env.PORT || 8000
   app.get('/',(req,res,next)=>{

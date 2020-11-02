@@ -29,22 +29,39 @@ db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.token=require('../models/token.js')(sequelize,Sequelize)
 db.doctor=require('../models/doctor.model.js')(sequelize,Sequelize)
 db.patient=require('../models/patient.model.js')(sequelize,Sequelize)
-db.skill=require('../models/skill.model.js')(sequelize,Sequelize)
+db.day=require('../models/day.model.js')(sequelize,Sequelize)
 
+//defining user role
 db.role.hasMany(db.user, {
   as:"users",
   
 });
+
 db.user.belongsTo(db.role, {
- foreignKey:"roleId",
- as:"roles"
+  foreignKey:"roleId",
+  as:"roles"
+ });
+
+ //defining doctor day
+ db.doctor.hasOne(db.day, {
+  as:"doctors",
+  
 });
 
+db.day.belongsTo(db.doctor, {
+  foreignKey:"doctorId",
+  as:"days"
+ });
+ 
+
+ //defining user token
 db.user.hasOne(db.token)
 db.token.belongsTo(db.user,{
   foreignKey:'userId'
 })
 
+
+//defining doctor patient  relation
 db.doctor.belongsToMany(db.patient, {
   through: "doctor_patient",
   foreignKey: "doctorId",
@@ -56,17 +73,12 @@ db.patient.belongsToMany(db.doctor, {
   otherKey: "doctorId"
 });
 
-db.doctor.belongsToMany(db.skill,{
-  through:'doctor_skill',
-  foreignKey:"doctorId",
-  otherKey:"skillId"
-})
-db.skill.belongsToMany(db.doctor,{
-  through:'doctor_skill',
-  foreignKey:'skillId',
-  otherKey:'doctorId'
+ //defining doctor dayoff
 
-});
+
+
+
+
 
 
 db.ROLES = ["user", "admin"];

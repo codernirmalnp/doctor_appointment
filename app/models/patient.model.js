@@ -10,6 +10,10 @@ module.exports=(sequelize,Sequelize)=>
       image:{
           type:Sequelize.STRING,
       },
+      phone:{
+          type:Sequelize.BIGINT
+
+      },
       address:{
           type:Sequelize.STRING,
       }

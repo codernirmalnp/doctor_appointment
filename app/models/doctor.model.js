@@ -6,6 +6,14 @@ module.exports=(sequelize,Sequelize)=>
           type:Sequelize.STRING,
 
       },
+      work:{
+          type:Sequelize.STRING
+           
+      },
+      workingHospital:{
+          type:Sequelize.STRING
+             
+      },
       image:{
           type:Sequelize.STRING,
       },
@@ -16,15 +24,18 @@ module.exports=(sequelize,Sequelize)=>
           type:Sequelize.INTEGER
 
       },
-      availableDate:{
-          type:Sequelize.DATE
+      phone:{
+        type:Sequelize.BIGINT
 
-      },
+    },
+   
+  
 
       description:{
           type:Sequelize.TEXT
 
-      }
+      },
+   
   })
   return Doctor;
 }
